@@ -53,7 +53,10 @@ check_dependencies() {
     for cmd in node npm npx; do
         command -v "$cmd" &> /dev/null || { log_error "$cmd not found. Install Node.js 18+."; missing=1; }
     done
-    [ $missing -eq 1 ] && { log_warn "Missing dependencies. Exiting."; exit 1; }
+    if [ "$missing" -eq 1 ]; then
+        log_warn "Missing dependencies. Exiting."
+        exit 1
+    fi
 }
 
 pause() { echo ""; read -p "Press Enter to continue..."; }
